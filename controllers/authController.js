@@ -44,3 +44,43 @@ exports.signUp = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    // Validate Input
+    if (!email || !password) {
+      const error = new Error("Email and password are required.");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    // Find user By Email
+    const user = await User.findOne({ email });
+
+    // Validate user and password
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      const error = new Error("Invalid email or password.");
+      error.statusCode = 401;
+      throw error;
+    }
+
+    // Generate JWT
+    const token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
+      expiresIn: "1h",
+    });
+    res.status(200).json({
+      message: "Login Successfully",
+      token,
+      user: {
+        id: user._id,
+        user: user.name,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    error.statusCode = error.statusCode || 500;
+    next(error);
+  }
+};
