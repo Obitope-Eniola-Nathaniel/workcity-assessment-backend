@@ -6,9 +6,9 @@ const User = require("../models/User");
 
 const router = express.Router();
 
-//  POST http://localhost:5000/auth/register
+//  POST http://localhost:5000/auth/sign-up
 router.post(
-  "/register",
+  "/sign-up",
   [
     body("email")
       .isEmail()
@@ -43,7 +43,7 @@ router.post(
       .isLength({ min: 2 })
       .withMessage("Name must be at least 2 characters long"),
   ],
-  authController.register
+  authController.signUp
 );
 
 //  POST http://localhost:5000/auth/login
