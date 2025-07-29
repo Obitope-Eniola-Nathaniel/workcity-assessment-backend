@@ -16,11 +16,6 @@ const clientSchema = new Schema({
     type: String,
     required: true,
   },
-  createdBy: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
 });
 
 const Client = mongoose.model("Client", clientSchema);

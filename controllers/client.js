@@ -3,15 +3,15 @@ const Client = require("../models/Client");
 
 // Create a new client
 exports.createClient = async (req, res) => {
-  // Validate request body
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const errors = new Error("Validation failed, entered data is incorrect.");
-    errors.statusCode = 422; // Unprocessable Entity
-    throw errors;
-  }
-
   try {
+    // Validate request body
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const errors = new Error("Validation failed, entered data is incorrect.");
+      errors.statusCode = 422; // Unprocessable Entity
+      throw errors;
+    }
+
     // Check if user is authenticated
     if (!req.user) {
       const error = new Error("Not Authenticated.");
@@ -34,7 +34,7 @@ exports.createClient = async (req, res) => {
       error.statusCode = 500; // Internal Server Error
     }
     next(error);
-    // Optionally, you can log the error for debugging purposes
+    // you can log the error for debugging purposes
     console.error(error);
     res
       .status(500)
@@ -59,7 +59,7 @@ exports.getClients = async (req, res, next) => {
       error.statusCode = 500; // Internal Server Error
     }
     next(error);
-    // Optionally, you can log the error for debugging purposes
+    // you can log the error for debugging purposes
     console.error(error);
     res
       .status(500)
@@ -94,7 +94,7 @@ exports.getClientById = async (req, res, next) => {
       error.statusCode = 500; // Internal Server Error
     }
     next(error);
-    // Optionally, you can log the error for debugging purposes
+    // log the error for debugging purposes
     console.error(error);
     res
       .status(500)
@@ -134,7 +134,7 @@ exports.updateClient = async (req, res, next) => {
       error.statusCode = 500; // Internal Server Error
     }
     next(error);
-    // Optionally, you can log the error for debugging purposes
+    //log the error for debugging purposes
     console.error(error);
     res
       .status(500)
@@ -168,7 +168,7 @@ exports.deleteClient = async (req, res, next) => {
       error.statusCode = 500; // Internal Server Error
     }
     next(error);
-    // Optionally, you can log the error for debugging purposes
+    // log the error for debugging purposes
     console.error(error);
     res
       .status(500)

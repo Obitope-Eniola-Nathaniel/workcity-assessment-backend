@@ -7,11 +7,12 @@ const role = require("../middleware/role");
 const router = express.Router();
 
 // Create a new client - Only Admins can create clients
-// POST http://localhost:5000/client/create
+// POST http://localhost:5000/clients/create
 router.post(
   "/create",
   isAuth,
   role("admin"),
+
   [
     body("name").notEmpty().withMessage("Name is required."),
     body("email").isEmail().withMessage("Invalid email address."),
