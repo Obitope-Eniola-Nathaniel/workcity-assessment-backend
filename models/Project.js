@@ -20,6 +20,11 @@ const projectSchema = new Schema({
     ref: "Client",
     required: true,
   },
+  createdBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   startDate: {
     type: Date,
     required: true,
