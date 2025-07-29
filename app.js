@@ -8,6 +8,8 @@ const app = express();
 
 // Import routes
 const authRoutes = require("./routes/auth");
+const clientRoutes = require("./routes/client");
+const projectRoutes = require("./routes/project");
 const errorHandler = require("./middleware/errorHandler");
 
 // Allowed origins for CORS
@@ -37,6 +39,8 @@ mongoose
 
 // Routes
 app.use("/auth", authRoutes);
+app.use("/clients", clientRoutes);
+app.use("/projects", projectRoutes);
 
 // Error handling middleware
 app.use(errorHandler);
