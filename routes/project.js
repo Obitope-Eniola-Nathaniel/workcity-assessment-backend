@@ -3,13 +3,13 @@ const { body } = require("express-validator");
 const projectController = require("../controllers/project");
 const isAuth = require("../middleware/isAuth");
 const role = require("../middleware/role");
-const { model } = require("mongoose");
+console.log("isAuth type:", typeof isAuth);
 
 const router = express.Router();
 
 // Create a new project - admin only
 router.post(
-  "/",
+  "/create",
   isAuth,
   role("admin"),
   [
@@ -35,6 +35,6 @@ router.put("/:id", isAuth, role("admin"), projectController.updateProject);
 router.delete("/:id", isAuth, role("admin"), projectController.deleteProject);
 
 // Get all projects for a specific client
-router.get("/client/:clientId", isAuth, projectController.getProjectsByClient);
+// router.get("/client/:clientId", isAuth, projectController.getProjectsByClient);
 
 module.exports = router;
