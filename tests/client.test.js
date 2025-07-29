@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-require("dotenv").config();
+require("dotenv").config({ debug: false });
 
 const mongoose = require("mongoose");
 const Client = require("../models/Client");

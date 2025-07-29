@@ -3,7 +3,7 @@ const { body } = require("express-validator");
 const projectController = require("../controllers/project");
 const isAuth = require("../middleware/isAuth");
 const role = require("../middleware/role");
-console.log("isAuth type:", typeof isAuth);
+// console.log("isAuth type:", typeof isAuth);
 
 const router = express.Router();
 
@@ -35,6 +35,10 @@ router.put("/:id", isAuth, role("admin"), projectController.updateProject);
 router.delete("/:id", isAuth, role("admin"), projectController.deleteProject);
 
 // Get all projects for a specific client
-// router.get("/client/:clientId", isAuth, projectController.getProjectsByClient);
+router.get(
+  "/client/:clientId",
+  isAuth,
+  projectController.getProjectsByClientId
+);
 
 module.exports = router;
