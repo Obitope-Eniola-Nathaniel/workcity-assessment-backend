@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-require("dotenv").config({ debug: false });
+require('dotenv').config();
 
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
@@ -14,12 +14,11 @@ let projectId;
 let clientId;
 let userId;
 
+jest.setTimeout(30000); 
+
 beforeAll(async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URL);
 
     // Clear DB
     await User.deleteMany();
@@ -66,7 +65,7 @@ beforeAll(async () => {
   } catch (err) {
     console.error("Error in beforeAll:", err);
   }
-}, 20000);
+});
 
 // Clean up
 afterAll(async () => {

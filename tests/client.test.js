@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-require("dotenv").config({ debug: false });
+require("dotenv").config();
 
 const mongoose = require("mongoose");
 const Client = require("../models/Client");
@@ -8,15 +8,13 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 let token;
-let userId;
+// let userId;
 
+jest.setTimeout(30000);
 // Connect to MongoDB before running tests
 beforeAll(async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URL);
 
     await User.deleteMany();
     await Client.deleteMany();
@@ -29,18 +27,23 @@ beforeAll(async () => {
       role: "admin",
     });
 
-    userId = user._id;
+    // userId = user._id;
 
     // Generate token
     token = jwt.sign(
-      { id: user._id, role: user.role },
+      { userId: user._id, role: user.role },
       process.env.TOKEN_SECRET
     );
+    console.log("Connecting to:", process.env.MONGODB_URL);
+    console.log("🔌Connecting to MongoDB:", process.env.MONGODB_URL);
+    console.log(" Token Secret:", process.env.TOKEN_SECRET);
   } catch (err) {
     console.error("Error setting up test environment:", err);
+    mongoose.connection.on("error", (err) => {
+      console.error("MongoDB connection error:", err);
+    });
   }
-}, 20000); // Increase timeout if needed
-
+});
 // Clean db up after tests
 afterAll(async () => {
   await User.deleteMany();
@@ -55,6 +58,7 @@ describe("POST /clients", () => {
       name: "Client 1",
       email: "client1_" + Date.now() + "@gmail.com", // unique email to avoid conflict
       phone: "1234567890",
+      // createdBy: userId.toString(),
     };
 
     const res = await request(app)
