@@ -28,7 +28,7 @@ This is the backend API for the Workcity Full-Stack & WordPress Developer Assess
 
 
 ##  Project Structure
-
+``` bash
 ├── controllers/ # Route handlers
 ├── middleware/ # Auth middleware
 ├── models/ # Mongoose models
@@ -38,7 +38,7 @@ This is the backend API for the Workcity Full-Stack & WordPress Developer Assess
 ├── server.js # Server entry point
 ├── .env # Environment variables
 
-
+```
 
 ## Setup Instructions
 
