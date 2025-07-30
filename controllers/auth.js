@@ -14,8 +14,10 @@ exports.signUp = async (req, res, next) => {
       throw error;
     }
 
+    console.log("📦 Incoming signup data:", req.body);
+
     // Extract user details from request body
-    const { name, email, password, confirmPassword } = req.body;
+    const { name, email, password, confirmPassword, role } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -35,6 +37,7 @@ exports.signUp = async (req, res, next) => {
       name,
       email,
       password: hashedPassword,
+      role: role || "user",
     });
 
     await user.save();
@@ -67,9 +70,13 @@ exports.login = async (req, res, next) => {
     }
 
     // Generate JWT
-    const token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.TOKEN_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
     res.status(200).json({
       message: "Login Successfully",
       token,

@@ -13,7 +13,7 @@ router.post(
   isAuth,
   role("admin"),
   [
-    body("name").trim().notEmpty().withMessage("Name is required"),
+    body("title").trim().notEmpty().withMessage("Name is required"),
     body("description")
       .trim()
       .notEmpty()

@@ -1,8 +1,9 @@
 const { validationResult } = require("express-validator");
 const Client = require("../models/Client");
+const Project = require("../models/Project");
 
 // Create a new client
-exports.createClient = async (req, res) => {
+exports.createClient = async (req, res, next) => {
   try {
     // Validate request body
     const errors = validationResult(req);
@@ -25,7 +26,7 @@ exports.createClient = async (req, res) => {
       name,
       email,
       phone,
-      createdBy: req.user.id,
+      createdBy: req.user.userId,
     });
     await client.save();
     res.status(201).json(client);
@@ -79,16 +80,15 @@ exports.getClientById = async (req, res, next) => {
       throw error;
     }
 
-    const client = await Client.findById(clientId).populate(
-      "createdBy",
-      "name email"
-    );
+    const client = await Client.findById(clientId);
     if (!client) {
       const error = new Error("Client not found.");
       error.statusCode = 404; // Not Found
       throw error;
     }
-    res.status(200).json(client);
+    const projects = await Project.find({ client: client._id });
+
+    res.status(200).json({ client, projects });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500; // Internal Server Error
@@ -161,7 +161,8 @@ exports.deleteClient = async (req, res, next) => {
       throw error;
     }
 
-    await client.remove();
+    await Client.findByIdAndDelete(req.params.id);
+
     res.status(204).json({ message: "Client deleted successfully." });
   } catch (error) {
     if (!error.statusCode) {

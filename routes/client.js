@@ -28,7 +28,7 @@ router.get("/", isAuth, clientController.getClients);
 router.get("/:id", isAuth, clientController.getClientById);
 
 // Update a client - Only Admins can update clients
-// PUT http://localhost:5000/client/:id
+// PUT http://localhost:5000/clients/:id
 router.put(
   "/:id",
   isAuth,
@@ -43,6 +43,6 @@ router.put(
 
 // Delete a client - Only Admins can delete clients
 // DELETE http://localhost:5000/client/:id
-router.delete("/:id", role("admin"), clientController.deleteClient);
+router.delete("/:id", isAuth, role("admin"), clientController.deleteClient);
 
 module.exports = router;

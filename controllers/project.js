@@ -20,14 +20,15 @@ exports.createProject = async (req, res, next) => {
     }
 
     // Extract project data from request body
-    const { name, description, status, client } = req.body;
+    const { title, description, status, client, endDate } = req.body;
     const project = new Project({
-      name,
+      title,
       description,
       status,
       client,
-      createdBy: req.user.id,
+      createdBy: req.user.userId,
       startDate: new Date(), // Assuming start date is now
+      endDate,
     });
     await project.save();
     res.status(201).json(project);

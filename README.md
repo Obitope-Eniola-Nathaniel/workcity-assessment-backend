@@ -25,9 +25,9 @@ This is the backend API for the Workcity Full-Stack & WordPress Developer Assess
 - **Jest + Supertest** (Testing)
 - **dotenv** (Environment config)
 
----
 
-## 📁 Project Structure
+
+##  Project Structure
 
 ├── controllers/ # Route handlers
 ├── middleware/ # Auth middleware
@@ -38,7 +38,7 @@ This is the backend API for the Workcity Full-Stack & WordPress Developer Assess
 ├── server.js # Server entry point
 ├── .env # Environment variables
 
----
+
 
 ## Setup Instructions
 
