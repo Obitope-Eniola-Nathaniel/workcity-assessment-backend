@@ -7,7 +7,7 @@ module.exports = (...allowedRoles) => {
       // console.log("Access denied by role check");
       return res.status(403).json({ message: "Access denied" });
     }
-    console.log("✅ Role check passed");
+    console.log("Role check passed");
     next();
   };
 };
